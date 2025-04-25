@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BattleShip</title>
+    <script type="module" src="main.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="all">
+        <div id="container">
+            <!-- BOARD1 -->
+            <div class="ship_box">
+                <div class="board_title">Home Ships</div>
+                <div class="board_layout">
+                    <div class="horrizontal_label">
+                        <span></span>
+                        <span>1</span>
+                        <span>2</span>
+                        <span>3</span>
+                        <span>4</span>
+                        <span>5</span>
+                        <span>6</span>
+                        <span>7</span>
+                        <span>8</span>
+                        <span>9</span>
+                        <span>10</span>
+                    </div>
+                    <div class="vertical_label">
+                        <span>A</span>
+                        <span>B</span>
+                        <span>C</span>
+                        <span>D</span>
+                        <span>E</span>
+                        <span>F</span>
+                        <span>G</span>
+                        <span>H</span>
+                        <span>I</span>
+                        <span>J</span>
+                    </div>
+                    <div class="main_board" id="main_board1"></div>
+                </div>
+                <div id="board1Status">
+                    <span>Suffered - </span>
+                    <span id="board1hit">Hit: </span>
+                    <span id="board1miss">Miss: </span>
+                    <span id="board1sunk">Sunk: </span>
+                </div>
+                <div id="board1Accuracy">
+                </div>
+
+            </div>
+            <!-- GUTTER -->
+            <div class="gutter">
+                <div id="timer"></div>
+                <button class="bright-green-button" id ="start_game">Start Game</button>
+                <div id="whose_turn"></div>
+                <div id="winner"></div>
+            </div>
+            <!-- BOARD 2 -->
+            <div class="ship_box">
+                <div class="board_title">Enemy Ships</div>
+                <div class="board_layout">
+                    <div class="horrizontal_label">
+                        <span></span>
+                        <span>1</span>
+                        <span>2</span>
+                        <span>3</span>
+                        <span>4</span>
+                        <span>5</span>
+                        <span>6</span>
+                        <span>7</span>
+                        <span>8</span>
+                        <span>9</span>
+                        <span>10</span>
+                    </div>
+                    <div class="vertical_label">
+                        <span>A</span>
+                        <span>B</span>
+                        <span>C</span>
+                        <span>D</span>
+                        <span>E</span>
+                        <span>F</span>
+                        <span>G</span>
+                        <span>H</span>
+                        <span>I</span>
+                        <span>J</span>
+                    </div>
+                    <div class="main_board" id="main_board2"></div>
+                </div>
+                <div id="board2Status">
+                    <span>Achieved - </span>
+                    <span id="board2hit">Hit: </span>
+                    <span id="board2miss">Miss: </span>
+                    <span id="board2sunk">Sunk: </span>
+                </div>
+                <div id="board2Accuracy">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
