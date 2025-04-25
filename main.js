@@ -447,6 +447,17 @@ function ScreenController(gamer1, gamer2){
             sunkCheckforLastHit = isAddressSunk(lastHit.address);
         }
 
+        // const getShipRow = (address) => {
+        //     return Math.floor(address / 10);
+        // }
+
+        // const getShipColumn = (address) => {
+        //     return (address % 10);
+        // }
+
+        // const sameShipCheck = (array) => {
+
+        // }
 
 
 
@@ -455,15 +466,16 @@ function ScreenController(gamer1, gamer2){
 
 
 
+        let refHit = null;
         if(lastHit && sunkCheckforLastHit){
             // check for atleast 2 unsunk address that belonged to the same ship
             // use those 2 info to get the next address.
 
 
             // check for spare unsunk address when 4 ships are sunk.
-            if(humanSunkRecord.length === 4){
+            if(humanSunkRecord.length > 1){
                 for(let i = attackRecordByComputer.length - 1; i >= 0 ; i--){
-                    let refHit = attackRecordByComputer[i];
+                    refHit = attackRecordByComputer[i];
                     if(refHit.hit && isAddressSunk(refHit.address) === false){
                         lastHit = refHit;
                         spareUnsunkAddress = true;
@@ -473,9 +485,14 @@ function ScreenController(gamer1, gamer2){
                 }
             }
 
-            if(humanSunkRecord.length < 4){
+
+            if(spareUnsunkAddress = false){
                 return getRandomNumber();
             }
+        }
+
+        if(refHit !== null){
+            lastHit = refHit;
         }
 
 
@@ -571,29 +588,46 @@ function ScreenController(gamer1, gamer2){
 
 
             if(!sunkCheckForPenultimateHit && relationshipCheck === 'vertical'){
-                //same columns;
-                // Check for Available rows
+                //same columns, checking for Available rows
+                
                 let availableRows = [];
                 for(let i = 0; i < 10; i++){
                     if(game.getActiveOpponent().layout[i][lastHitColumn].attacked === false){
                         availableRows.push(i);
                     }
                 }
-                let newRow = availableRows[0];
+                let upperRow = Math.max(lastHitRow, penultimateHitRow);
+                let lowerRow = Math.min(lastHitRow, penultimateHitRow);
+                let newRow;
+                if(availableRows.includes(upperRow + 1)){
+                    newRow = upperRow + 1;
+                }else if(availableRows.includes(lowerRow - 1)){
+                    newRow = lowerRow - 1;
+                }else{
+                    newRow = availableRows[0];
+                }
                 let newAddress = (newRow * 10) + lastHitColumn;
                 return newAddress;
             }
 
             if(!sunkCheckForPenultimateHit && relationshipCheck === 'horizontal'){
-                // Same rows
-                // Check for Available Columns
+                // Same rows, checking for Available Columns 
                 let availableColumns = [];
                 for(let i = 0; i < 10; i++){
                     if(game.getActiveOpponent().layout[lastHitRow][i].attacked === false){
                         availableColumns.push(i);
                     }
                 }
-                let newColumn = availableColumns[0];
+                let newColumn;
+                let upperColumn = Math.max(lastHitColumn, penultimateHitColumn);
+                let lowerColumn = Math.min(lastHitColumn, penultimateHitColumn);
+                if(availableColumns.includes(upperColumn + 1)){
+                    newColumn = upperColumn + 1;
+                }else if(availableColumns.includes(lowerColumn - 1)){
+                    newColumn = lowerColumn - 1;
+                }else{
+                    newColumn = availableColumns[0];
+                }
                 let newAddress = (lastHitRow * 10) + newColumn;
                 return newAddress;
 
