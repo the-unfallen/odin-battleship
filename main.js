@@ -1,15 +1,11 @@
-import { Ship, Gameboard, Player } from "./index.js";
+import { Player } from "./index.js";
 
-const initialSetUp = (playerOne, playerTwo) => {
-    //populate board for player 1 
-    
-    const boardLayout = playerOne.board.layout;
-    // console.log(boardLayout);
+const initialSetUp = () => {
     const mainBoard1 = document.getElementById('main_board1');
     const mainBoard2 = document.getElementById('main_board2');
     [mainBoard1, mainBoard2].forEach((element, index) => {
-        for (let i = 0; i < boardLayout.length; i++) {
-            for (let j = 0; j < boardLayout[i].length; j++) {
+        for (let i = 0; i < 10; i++) {
+            for (let j = 0; j < 10; j++) {
                 const cell = document.createElement("div");
                 cell.id = `${index}cell${i}${j}`;
                 cell.classList.add(`cell${index}`);
@@ -97,7 +93,6 @@ const displayControl = () => {
     const computerPlayer = new Player('computer', 'computer');
     computerPlayer.setBoard();
     computerPlayer.board.placeShip();
-    initialSetUp(humanPlayer, computerPlayer);
     displayShips(humanPlayer, computerPlayer);
     ScreenController(humanPlayer, computerPlayer);
    
@@ -106,7 +101,7 @@ const displayControl = () => {
 
 const startGame = document.getElementById('start_game');
 
-
+initialSetUp();
 startGame.onclick = () => {
     startGame.classList.toggle('disabled');
     displayControl();
@@ -456,7 +451,16 @@ function ScreenController(gamer1, gamer2){
 
 
 
+
+
+
+
         if(lastHit && sunkCheckforLastHit){
+            // check for atleast 2 unsunk address that belonged to the same ship
+            // use those 2 info to get the next address.
+
+
+            // check for spare unsunk address when 4 ships are sunk.
             if(humanSunkRecord.length === 4){
                 for(let i = attackRecordByComputer.length - 1; i >= 0 ; i--){
                     let refHit = attackRecordByComputer[i];
@@ -468,6 +472,7 @@ function ScreenController(gamer1, gamer2){
                     }
                 }
             }
+
             if(humanSunkRecord.length < 4){
                 return getRandomNumber();
             }
@@ -645,6 +650,21 @@ function ScreenController(gamer1, gamer2){
             
             document.getElementById(game.getActivePlayer().boardId).classList.add('cell_disabled');
             document.getElementById(game.getActiveOpponent().boardId).classList.add('cell_disabled');
+            document.getElementById('start_game').classList.remove('disabled');
+            document.getElementById('start_game').textContent = 'Play Again';
+            document.getElementById('start_game').onclick = () => {
+                location.reload();
+            }
+            // console.log('We have a winner');
+            // disable all boards
+            // announce winner
+            // console.log('We have a winner');
+
+
+
+
+
+
         }
     }
 
