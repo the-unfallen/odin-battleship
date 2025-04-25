@@ -365,6 +365,7 @@ function ScreenController(gamer1, gamer2){
     }
 
     function computersTurn(){
+        const virginTargets = getUnattackedHumanCells();
         
         if(game.getActivePlayer().type === 'computer'){
             // console.log(getHumanSunkStatus());
@@ -375,7 +376,7 @@ function ScreenController(gamer1, gamer2){
             let address = null;
             let hitResult = false;
             while(!check){
-                const randomNumber = computerIntelligence() || getRandomNumber();
+                const randomNumber = computerIntelligence() || virginTargets[getRandomNumber(virginTargets.length)];
                 const randomRow = Math.floor(randomNumber / 10);
                 const randomColumn = randomNumber % 10;
                 if(game.getActiveOpponent().layout[randomRow][randomColumn].attacked === false){
@@ -402,11 +403,35 @@ function ScreenController(gamer1, gamer2){
         }
     }
 
-    function getRandomNumber(){
-        return Math.floor(Math.random() * 100);
+    function getRandomNumber(unincludedUpperLimit){
+        return Math.floor(Math.random() * unincludedUpperLimit);
+    }
+
+    function getUnattackedHumanCells(){
+        let humanPlayer;
+        if(game.players[0].type !== 'computer'){
+            humanPlayer = game.players[0]
+        }
+        if(game.players[1].type !== 'computer'){
+            humanPlayer = game.players[1]
+        }
+        let unattackedArray = [];
+
+        for(let i = 0; i < humanPlayer.board.layout.length; i++){
+            for(let j = 0; j < humanPlayer.board.layout[i].length; j++){
+                if(!humanPlayer.board.layout[i][j].attacked){
+                    let unattackedAddress = (i * 10) + j;
+                    unattackedArray.push(unattackedAddress);
+                }
+            }
+        }
+
+        return unattackedArray;
+
     }
 
     function computerIntelligence(){
+        const virginTargets = getUnattackedHumanCells();
         // Let's find a hit.
         let findAHit = false;
         let lastHit = null;
@@ -422,7 +447,7 @@ function ScreenController(gamer1, gamer2){
         }
 
         if(!findAHit && lastHit === null){
-            return getRandomNumber();
+            return virginTargets[getRandomNumber(virginTargets.length)];
         }
 
         const humanSunkRecord = getHumanSunkStatus() || [];
@@ -487,7 +512,7 @@ function ScreenController(gamer1, gamer2){
 
 
             if(spareUnsunkAddress = false){
-                return getRandomNumber();
+                return virginTargets[getRandomNumber(virginTargets.length)]
             }
         }
 
@@ -653,7 +678,7 @@ function ScreenController(gamer1, gamer2){
 
 
 
-        return getRandomNumber();
+        return virginTargets[getRandomNumber(virginTargets.length)];
 
     }
 
